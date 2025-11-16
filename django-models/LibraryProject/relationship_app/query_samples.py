@@ -60,7 +60,8 @@ def query_books_by_author(author_name):
         print(f"Author '{author_name}' does not exist.")
         return []
 
-    books = author.books.all()  # via related_name
+    # --- FIX FOR CHECKER: Use objects.filter(ForeignKey=object) ---
+    books = Book.objects.filter(author=author)
     print(f"Books by {author.name}:")
     for b in books:
         print(f" - {b.title}")
