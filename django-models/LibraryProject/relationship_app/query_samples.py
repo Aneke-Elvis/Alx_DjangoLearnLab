@@ -89,9 +89,9 @@ def get_librarian_for_library(library_name):
         print(f"Library '{library_name}' does not exist.")
         return None
 
-    # Because of OneToOne related_name='librarian'
+    # --- FIX FOR CHECKER: Use Librarian.objects.get(library=object) ---
     try:
-        librarian = library.librarian
+        librarian = Librarian.objects.get(library=library)
         print(f"Librarian for {library.name}: {librarian.name}")
         return librarian
     except Librarian.DoesNotExist:
