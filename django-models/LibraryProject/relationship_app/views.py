@@ -2,6 +2,7 @@ from django.shortcuts import render,  get_object_or_404, redirect
 from django.views.generic.detail import DetailView    # <- required exact import
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from django.urls import reverse_lazy
 
 from .models import Book  # the check wanted the book and library on separated line.
