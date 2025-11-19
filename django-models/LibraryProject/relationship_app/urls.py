@@ -18,4 +18,9 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', CustomLoginView.as_view(template_name='relationship_app/login.html'), name='login'),
     path('logout/', CustomLogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
+
+     # role-based access control views
+    path('role/admin/', views.admin_view, name='admin_view'),
+    path('role/librarian/', views.librarian_view, name='librarian_view'),
+    path('role/member/', views.member_view, name='member_view'),
 ]
