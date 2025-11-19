@@ -1,4 +1,6 @@
 # django-models/LibraryProject/relationship_app/forms.py
+from django import forms
+from .models import Book
 
 from django.contrib.auth.forms import UserCreationForm
 
@@ -9,3 +11,8 @@ class CustomUserCreationForm(UserCreationForm):
     """
     class Meta(UserCreationForm.Meta):
         fields = UserCreationForm.Meta.fields
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title', 'publication_year', 'author', 'library']
