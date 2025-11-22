@@ -5,7 +5,7 @@ from django.contrib import messages
 from .models import Book
 from .forms import BookForm
 from django.db.models import Q
-
+from .forms import ExampleForm
 
 # ============================================
 #   LIST BOOKS – Requires View Permission
@@ -88,3 +88,17 @@ def search_books(request):
         "books": results,
         "query": query
     })
+
+@login_required
+def example_form_view(request):
+    if request.method == "POST":
+        form = ExampleForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Form submitted securely.")
+            return redirect("book_list")
+    else:
+        form = ExampleForm()
+
+    return render(request, "bookshelf/form_example.html", {"form": form})
