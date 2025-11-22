@@ -4,6 +4,7 @@ from django.contrib import messages
 
 from .models import Book
 from .forms import BookForm
+from django.db.models import Q
 
 
 # ============================================
@@ -70,3 +71,20 @@ def book_delete(request, pk):
         return redirect('book_list')
 
     return render(request, 'bookshelf/book_confirm_delete.html', {'book': book})
+
+@login_required
+def search_books(request):
+    query = request.GET.get("q", "")
+
+    results = Book.objects.none()
+
+    if query:
+        # SAFE: ORM prevents SQL injection
+        results = Book.objects.filter(
+            Q(title__icontains=query) | Q(author__name__icontains=query)
+        )
+
+    return render(request, "bookshelf/book_list.html", {
+        "books": results,
+        "query": query
+    })

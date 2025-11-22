@@ -130,3 +130,39 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
+
+# ==========================
+# SECURITY SETTINGS
+# ==========================
+
+DEBUG = False   # Always False in production
+
+# Prevent browser XSS attacks
+SECURE_BROWSER_XSS_FILTER = True
+
+# Disallow the site from being displayed in iframes
+X_FRAME_OPTIONS = "DENY"
+
+# Prevent MIME-type sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Force CSRF cookie and session cookies to be HTTPS-only
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Additional recommended settings
+
+# Set HSTS (HTTP Strict Transport Security)
+SECURE_HSTS_SECONDS = 31536000      # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Content Security Policy (CSP)
+# Only allow scripts from the same domain
+CSP_DEFAULT_SRC = ("'self'",)
+
+# Middleware – Ensure CSP middleware is active
+MIDDLEWARE = [
+    # ...
+    "csp.middleware.CSPMiddleware",   # <--- add this
+]
