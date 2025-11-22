@@ -18,3 +18,25 @@ python manage.py migrate
 Run Sample Queries Script:This script initializes sample data and executes the required queries against the database. Run this command from the django-models directory:Bashpython LibraryProject/relationship_app/query_samples.py
 
 ✅ Query Examples ImplementedThe query_samples.py script demonstrates the following ORM operations:Query all books by a specific author (ForeignKey reverse lookup).List all books available in a specific library (ManyToManyField lookup).Retrieve the librarian assigned to a specific library (OneToOneField reverse lookup).
+
+# Django Security Enhancements
+
+## 1. Secure Settings
+
+The following settings were applied in `settings.py`:
+
+- `DEBUG = False` – disable debug in production
+- `SECURE_BROWSER_XSS_FILTER = True` – activates XSS protection
+- `X_FRAME_OPTIONS = "DENY"` – prevents clickjacking
+- `SECURE_CONTENT_TYPE_NOSNIFF = True` – disables content sniffing
+- `SESSION_COOKIE_SECURE = True` – cookies sent only via HTTPS
+- `CSRF_COOKIE_SECURE = True` – CSRF cookie secured
+- `SECURE_HSTS_SECONDS` – enables HTTP Strict Transport Security
+- Content Security Policy added via `django-csp` middleware
+
+## 2. CSRF Protection
+
+All forms now include:
+
+```html
+{% csrf_token %}
