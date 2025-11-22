@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yj46%2@aikg!*k+to56r#+1-)2+gx_qm6(d2&!s@kl7nv_r$#o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
@@ -42,13 +42,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+   'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',   # Add CSP here
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
@@ -147,8 +148,8 @@ X_FRAME_OPTIONS = "DENY"
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # Force CSRF cookie and session cookies to be HTTPS-only
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False  #setting cookie off because its just development stage.
+SESSION_COOKIE_SECURE = False
 
 # Additional recommended settings
 
@@ -161,8 +162,3 @@ SECURE_HSTS_PRELOAD = True
 # Only allow scripts from the same domain
 CSP_DEFAULT_SRC = ("'self'",)
 
-# Middleware – Ensure CSP middleware is active
-MIDDLEWARE = [
-    # ...
-    "csp.middleware.CSPMiddleware",   # <--- add this
-]
