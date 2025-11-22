@@ -1,18 +1,31 @@
+# relationship_app/admin.py
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
-from .models import Book # Import the Book model from the current app's models.py
+from .models import CustomUser
+# ---------------------------
+# Custom User Admin
+# ---------------------------
+class CustomUserAdmin(UserAdmin):
+    model = CustomUser
 
-# 1. Define the custom Admin class
-class BookAdmin(admin.ModelAdmin):
-    # a. Customize the fields displayed on the list page
-    list_display = ('title', 'author', 'publication_year')
+    list_display = (
+        'username',
+        'email',
+        'date_of_birth',
+        'is_staff',
+        'is_superuser'
+    )
 
-    # b. Add filters to the sidebar
-    list_filter = ('author', 'publication_year')
+    fieldsets = UserAdmin.fieldsets + (
+        ('Additional Info', {'fields': ('date_of_birth', 'profile_photo')}),
+    )
 
-    # c. Enable searching on specific fields
-    search_fields = ('title', 'author')
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ('Additional Info', {'fields': ('date_of_birth', 'profile_photo')}),
+    )
 
-# 2. Register the model using the custom class
-admin.site.register(Book, BookAdmin)
+# Register remaining models
+admin.site.register(CustomUser, CustomUserAdmin)
+
 
