@@ -2,6 +2,7 @@
 
 from django.urls import path
 from django.http import JsonResponse
+from .views import BookList
 
 # Temporary root view to confirm API routing works.
 def ping(request):
@@ -9,4 +10,5 @@ def ping(request):
 
 urlpatterns = [
     path('', ping, name='api-root'),
+    path('books/', BookList.as_view(), name='book-list'),
 ]
